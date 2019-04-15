@@ -27,7 +27,9 @@
 #define cpu_map_h
 
 
-#ifdef CPU_MAP_ATMEGA328P // (Arduino Uno) Officially supported by Grbl.
+#ifdef CPU_MAP_ATMEGA328P_SERVO 
+
+	#define PEN_SERVO
 
   // Define serial port pins and interrupt vectors.
   #define SERIAL_RX     USART_RX_vect
@@ -61,12 +63,10 @@
   #define LIMIT_PIN        PINB
   #define LIMIT_PORT       PORTB
   #define X_LIMIT_BIT      1  // Uno Digital Pin 9
-  #define Y_LIMIT_BIT      2  // Uno Digital Pin 10
-  #ifdef VARIABLE_SPINDLE // Z Limit pin and spindle enabled swapped to access hardware PWM on Pin 11.
-    #define Z_LIMIT_BIT	   4 // Uno Digital Pin 12
-  #else
-    #define Z_LIMIT_BIT    3  // Uno Digital Pin 11
-  #endif
+  #define Y_LIMIT_BIT      2  // Uno Digital Pin 10  
+  #define Z_LIMIT_BIT	   4 // Uno Digital Pin 12
+  
+  
   #define LIMIT_MASK       ((1<<X_LIMIT_BIT)|(1<<Y_LIMIT_BIT)|(1<<Z_LIMIT_BIT)) // All limit bits
   #define LIMIT_INT        PCIE0  // Pin change interrupt enable pin
   #define LIMIT_INT_vect   PCINT0_vect
@@ -76,22 +76,9 @@
   #define SPINDLE_ENABLE_DDR    DDRB
   #define SPINDLE_ENABLE_PORT   PORTB
   // Z Limit pin and spindle PWM/enable pin swapped to access hardware PWM on Pin 11.
-  #ifdef VARIABLE_SPINDLE
-    #ifdef USE_SPINDLE_DIR_AS_ENABLE_PIN
-      // If enabled, spindle direction pin now used as spindle enable, while PWM remains on D11.
-      #define SPINDLE_ENABLE_BIT    5  // Uno Digital Pin 13 (NOTE: D13 can't be pulled-high input due to LED.)
-    #else
-      #define SPINDLE_ENABLE_BIT    3  // Uno Digital Pin 11
-    #endif
-  #else
-    #define SPINDLE_ENABLE_BIT    4  // Uno Digital Pin 12
-  #endif
-  #ifndef USE_SPINDLE_DIR_AS_ENABLE_PIN
-    #define SPINDLE_DIRECTION_DDR   DDRB
-    #define SPINDLE_DIRECTION_PORT  PORTB
-    #define SPINDLE_DIRECTION_BIT   5  // Uno Digital Pin 13 (NOTE: D13 can't be pulled-high input due to LED.)
-  #endif
-
+  
+  #define SPINDLE_ENABLE_BIT    5  // Nano Digital Pin 13
+  
   // Define flood and mist coolant enable output pins.
   #define COOLANT_FLOOD_DDR   DDRC
   #define COOLANT_FLOOD_PORT  PORTC

@@ -33,6 +33,11 @@
 // Initializes spindle pins and hardware PWM, if enabled.
 void spindle_init();
 
+void servo_init();
+void pen_up();
+void pen_down();
+void set_pen_pos();
+
 // Returns current spindle output state. Overrides may alter it from programmed states.
 uint8_t spindle_get_state();
 
